@@ -10,6 +10,7 @@ versions.glide = "3.8.0"
 versions.android_gradle_plugin = "3.0.1"
 versions.rxjava = "1.1.6"
 versions.rx_android = "1.2.1"
+versions.archVersion = '1.0.0'
 ext.versions = versions
 
 def build_versions = [:]

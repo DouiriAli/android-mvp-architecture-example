@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/error_network"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:padding="80dp">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_bad" />
+
+        <TextView
+            android:id="@+id/textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:textColor="@color/colorBlack" />
+
+        <Button
+            android:id="@+id/repeat_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textview"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:background="@drawable/background_button_states_transparency_to_primary"
+            android:text="@string/try_again_btn"
+            android:textAllCaps="true"
+            android:textColor="@drawable/background_text_states_white_to_primary" />
+
+    </RelativeLayout>
+
+</merge>
