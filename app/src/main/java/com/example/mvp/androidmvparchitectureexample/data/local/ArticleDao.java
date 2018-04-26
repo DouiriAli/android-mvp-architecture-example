@@ -22,7 +22,7 @@ public interface ArticleDao {
     Flowable<List<ArticleEntity>> getArticlesFromDb();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveArticles(List<ArticleEntity> users);
+    void saveArticles(List<ArticleEntity> items);
 
     @Query("DELETE FROM article")
     void deleteArticles();

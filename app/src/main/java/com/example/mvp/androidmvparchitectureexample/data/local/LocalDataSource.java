@@ -1,5 +1,6 @@
 package com.example.mvp.androidmvparchitectureexample.data.local;
 
+
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
@@ -11,8 +12,10 @@ import javax.inject.Singleton;
  */
 
 @Singleton
-@Database(entities = { ArticleEntity.class }, version = 1, exportSchema = false)
-public abstract class LocalDataSource extends RoomDatabase{
+@Database(entities = ArticleEntity.class, version = 1)
+public abstract class LocalDataSource extends RoomDatabase {
 
     public abstract ArticleDao getArticleDao();
+
 }
+

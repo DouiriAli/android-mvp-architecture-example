@@ -12,7 +12,6 @@ public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
     private V mView;
     private Subscription mSubscription;
 
-
     @Override
     public void attachView(V view) {
         mView = view;

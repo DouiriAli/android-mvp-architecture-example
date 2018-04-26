@@ -3,9 +3,9 @@ package com.example.mvp.androidmvparchitectureexample;
 import android.app.Application;
 
 import com.example.mvp.androidmvparchitectureexample.di.component.AppComponent;
+import com.example.mvp.androidmvparchitectureexample.di.component.DaggerAppComponent;
+import com.example.mvp.androidmvparchitectureexample.di.component.DaggerNewsComponent;
 import com.example.mvp.androidmvparchitectureexample.di.module.AppModule;
-import com.example.mvp.androidmvparchitectureexample.di.DaggerAppComponent;
-import com.example.mvp.androidmvparchitectureexample.di.DaggerNewsComponent;
 import com.example.mvp.androidmvparchitectureexample.di.component.NewsComponent;
 import com.example.mvp.androidmvparchitectureexample.di.module.NewsModule;
 

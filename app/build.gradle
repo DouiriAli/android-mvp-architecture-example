@@ -55,13 +55,14 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 
     // Java Rx
-    implementation "io.reactivex:rxandroid:$versions.rx_android"
-    implementation "io.reactivex:rxjava:$versions.rxjava"
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rxjava"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rx_android"
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit"
 
     // Room
     implementation "android.arch.persistence.room:runtime:$versions.archVersion"

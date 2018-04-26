@@ -22,6 +22,8 @@ public interface ContractNews {
 
         void getArticleFromDb();
 
+        void saveArticles(List<ArticleEntity> items);
+
     }
 
     interface ContractView extends IBaseView {

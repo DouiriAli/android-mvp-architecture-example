@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
-        android:id="@+id/error_network"
+        android:id="@+id/content_error"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
@@ -23,6 +23,7 @@
             android:layout_below="@+id/img"
             android:layout_centerHorizontal="true"
             android:gravity="center"
+            android:text="@string/message_error_has_occurred"
             android:layout_marginTop="@dimen/spacing_normal"
             android:textColor="@color/colorBlack" />
 
@@ -35,7 +36,7 @@
             android:background="@drawable/background_button_states_transparency_to_primary"
             android:text="@string/try_again_btn"
             android:textAllCaps="true"
-            android:textColor="@drawable/background_text_states_white_to_primary" />
+            android:textColor="@drawable/background_text_states_primary_to_white" />
 
     </RelativeLayout>
 

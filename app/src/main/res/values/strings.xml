@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AndroidMVPArchitectureExample</string>
-    <string name="header_search_hint">Rechercher un produit.</string>
-    <string name="try_again_btn">Réessayer</string>
+    <string name="try_again_btn">Retry</string>
     <string name="message_error_has_occurred">An error has occurred</string>
 </resources>

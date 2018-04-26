@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.example.mvp.androidmvparchitectureexample.BuildConfig;
+import com.example.mvp.androidmvparchitectureexample.data.local.ArticleDao;
 import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteService;
@@ -21,7 +22,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -45,6 +46,11 @@ public class AppModule {
                 .build();
     }
 
+    @Singleton
+    @Provides
+    public ArticleDao providesArticleDao(LocalDataSource localDataSource) {
+        return localDataSource.getArticleDao();
+    }
 
     @Provides
     public Context providesAppContext() {
@@ -56,7 +62,7 @@ public class AppModule {
     public RemoteService providesRemoteService() {
         return new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getOkHttpClient())
                 .build()
