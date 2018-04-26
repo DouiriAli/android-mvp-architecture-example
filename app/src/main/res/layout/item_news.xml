@@ -6,14 +6,29 @@
     android:padding="@dimen/spacing_tiny"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/thumbnail"
+
+    <RelativeLayout
+        android:id="@+id/layout_thumbnail"
         android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:scaleType="centerCrop"/>
+        android:layout_height="96dp">
+
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:scaleType="centerCrop"
+            />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toRightOf="@+id/layout_thumbnail"
         android:paddingLeft="@dimen/spacing_tiny"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,33 +49,13 @@
         android:layout_height="wrap_content"
         android:maxLines="2"
         android:ellipsize="end"
-        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:text="Les douaniers au poste frontalier de Guerguerate, dans la province d’Aousserd, ont déjoué récemment une tentative d’importation de produits et marchandises prohibés et non déclarés à bord d’un camion,"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/font_small" />
 
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_below="@+id/thumbnail"
-        android:padding="@dimen/spacing_tiny"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:text="11-09-1993"
-            android:drawablePadding="@dimen/spacing_tiny"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/ic_date"
-            android:layout_centerVertical="true"
-            android:textColor="@color/colorGrey"
-            android:textSize="@dimen/font_small" />
-
-    </RelativeLayout>
 
 </RelativeLayout>

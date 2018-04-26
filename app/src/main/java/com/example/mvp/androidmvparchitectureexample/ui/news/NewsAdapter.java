@@ -6,9 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.mvp.androidmvparchitectureexample.R;
 import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
 
@@ -28,11 +33,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
 
     private List<ArticleEntity> mItems;
     private Context mContext;
+    private final OnItemClickListener mListener;
 
-    public NewsAdapter(Context context, List<ArticleEntity> items) {
+    public NewsAdapter(Context context, List<ArticleEntity> items, OnItemClickListener listener) {
 
         this.mContext = context;
         this.mItems = items;
+        this.mListener = listener;
     }
 
     @Override
@@ -47,24 +54,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
     @Override
     public void onBindViewHolder(ArticleHolder holder, int position) {
 
-        ArticleEntity mItem = mItems.get(position);
-
-        if (mItem != null) {
-
-            if(mItem.getTitle() != null)
-                holder.mTitle.setText(mItem.getTitle());
-
-            if(mItem.getDescription() != null)
-                holder.mDescription.setText(mItem.getDescription());
-
-            if(mItem.getPublishedAt() != null)
-                holder.mDate.setText(mItem.getPublishedAt());
-
-            if(mItem.getUrlToImage() != null)
-                Glide.with(mContext).load(mItem.getUrlToImage()).
-                        asBitmap().into(holder.mThumbnail);
-
-        }
+        holder.bind(mContext, mItems.get(position), mListener);
 
     }
 
@@ -91,13 +81,63 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
         TextView mTitle;
         @BindView(R.id.description)
         TextView mDescription;
-        @BindView(R.id.date)
-        TextView mDate;
+        @BindView(R.id.progress)
+        ProgressBar mProgress;
 
         public ArticleHolder(View itemView) {
+
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
+
+        public void bind(Context context, final ArticleEntity item, final OnItemClickListener listener) {
+
+            if (item != null)
+            {
+
+                if (item.getTitle() != null)
+                    mTitle.setText(item.getTitle());
+
+                if (item.getDescription() != null)
+                    mDescription.setText(item.getDescription());
+
+                if (item.getUrlToImage() != null)
+                {
+                    Glide
+                            .with(context)
+                            .load(item.getUrlToImage())
+                            .listener(new RequestListener<String, GlideDrawable>() {
+                                @Override
+                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                    if (mProgress != null)
+                                        mProgress.setVisibility(View.GONE);
+
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                    if (mProgress != null)
+                                        mProgress.setVisibility(View.GONE);
+
+                                    return false;
+                                }
+                            })
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .centerCrop()
+                            .crossFade()
+                            .into(mThumbnail);
+                }
+
+            }
+
+            itemView.setOnClickListener(view -> listener.onItemClick(item));
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(ArticleEntity item);
     }
 }
 

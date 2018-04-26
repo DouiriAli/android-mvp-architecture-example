@@ -1,11 +1,10 @@
-package com.example.mvp.androidmvparchitectureexample.di;
+package com.example.mvp.androidmvparchitectureexample.di.module;
 
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.example.mvp.androidmvparchitectureexample.BuildConfig;
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleDao;
 import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteService;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.HttpUrl;
@@ -43,15 +41,10 @@ public class AppModule {
     @Singleton
     @Provides
     public LocalDataSource providesRoomDataSource() {
-        return Room.databaseBuilder(application, LocalDataSource.class, "article_database")
+        return Room.databaseBuilder(application, LocalDataSource.class, "news_database")
                 .build();
     }
 
-    @Singleton
-    @Provides
-    public ArticleDao providesUserDao(LocalDataSource userRoomDatabase) {
-        return userRoomDatabase.getArticleDao();
-    }
 
     @Provides
     public Context providesAppContext() {
@@ -72,7 +65,7 @@ public class AppModule {
 
     private OkHttpClient getOkHttpClient(){
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -81,9 +74,10 @@ public class AppModule {
                         HttpUrl originalHttpUrl = original.url();
 
                         HttpUrl mUrl = originalHttpUrl.newBuilder()
-                                .addQueryParameter(Constants.NAME_COUNTRY_API_NEWS, Constants.VALUE_COUNTRY_API_NEWS)
                                 .addQueryParameter(Constants.NAME_KEY_API_NEWS, Constants.VALUE_KEY_API_NEWS)
+                                .addQueryParameter(Constants.NAME_COUNTRY_API_NEWS, Constants.VALUE_COUNTRY_API_NEWS)
                                 .build();
+
 
                         Request request = original.newBuilder()
                                 .header("Content-Type", "application/json")
@@ -97,12 +91,9 @@ public class AppModule {
 
                     }
                 })
-
-                .readTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10,TimeUnit.SECONDS)
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .build();
-
-        return okHttpClient;
     }
 
     @Provides

@@ -3,8 +3,13 @@ package com.example.mvp.androidmvparchitectureexample.ui.news;
 import android.content.Context;
 import android.util.Log;
 
+import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
+import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
 import com.example.mvp.androidmvparchitectureexample.ui.base.BasePresenter;
 import com.example.mvp.androidmvparchitectureexample.utils.NetworkUtil;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -16,6 +21,14 @@ public class NewsPresenter extends BasePresenter<ContractNews.ContractView> impl
 
     private static final String TAG = NewsPresenter.class.getSimpleName();
 
+    LocalDataSource mLocalDataSource;
+    RemoteDataSource mRemoteDataSource;
+
+    public NewsPresenter(LocalDataSource mLocalDataSource, RemoteDataSource mRemoteDataSource) {
+
+        this.mLocalDataSource = mLocalDataSource;
+        this.mRemoteDataSource = mRemoteDataSource;
+    }
 
     @Override
     public void getArticles(Context context) {
@@ -31,14 +44,16 @@ public class NewsPresenter extends BasePresenter<ContractNews.ContractView> impl
 
         getView().showLoading();
 
-        getRemoteDataSource().getArticlesFromApi()
+        mRemoteDataSource.getArticlesFromApi()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {
 
                             if(!isViewAttached())
                                 return;
 
                             getView().hideLoading();
-                            if (response.isSuccessful() && response.body().getmStatus().equalsIgnoreCase("200"))
+                            if (response.isSuccessful())
                                 getView().onArtilesReady(response.body().getmArticles());
                         },
                         throwable -> {
@@ -51,21 +66,7 @@ public class NewsPresenter extends BasePresenter<ContractNews.ContractView> impl
     @Override
     public void getArticleFromDb() {
 
-        getView().showLoading();
 
-        getLocalDataSource().getArticleDao().getArticlesFromDb()
-                .subscribe(articlesEntities -> {
-
-                            if(!isViewAttached())
-                                return;
-
-                            getView().hideLoading();
-                            getView().onArtilesReady(articlesEntities);
-                        },
-                        throwable -> {
-                            getView().hideLoading();
-                            Log.e(TAG,  throwable.getMessage());
-                        });
 
     }
 }

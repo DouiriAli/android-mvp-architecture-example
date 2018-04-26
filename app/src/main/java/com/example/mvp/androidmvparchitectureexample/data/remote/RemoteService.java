@@ -2,8 +2,8 @@ package com.example.mvp.androidmvparchitectureexample.data.remote;
 
 import com.example.mvp.androidmvparchitectureexample.data.remote.model.News;
 
-import io.reactivex.Flowable;
 import retrofit2.Response;
+import retrofit2.http.GET;
 import rx.Observable;
 
 /**
@@ -13,5 +13,6 @@ import rx.Observable;
 
 public interface RemoteService {
 
-    Flowable<Response<News>> getArticleFroimApi();
+    @GET(".")
+    Observable<Response<News>> getArticleFroimApi();
 }

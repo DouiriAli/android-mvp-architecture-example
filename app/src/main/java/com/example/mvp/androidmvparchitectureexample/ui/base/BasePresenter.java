@@ -1,10 +1,5 @@
 package com.example.mvp.androidmvparchitectureexample.ui.base;
 
-import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
-import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
-
-import javax.inject.Inject;
-
 import rx.Subscription;
 
 /**
@@ -16,12 +11,6 @@ public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
 
     private V mView;
     private Subscription mSubscription;
-
-    @Inject
-    LocalDataSource mLocalDataSource;
-
-    @Inject
-    RemoteDataSource mRemoteDataSource;
 
 
     @Override
@@ -45,14 +34,6 @@ public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
 
     public V getView() {
         return mView;
-    }
-
-    public LocalDataSource getLocalDataSource() {
-        return mLocalDataSource;
-    }
-
-    public RemoteDataSource getRemoteDataSource() {
-        return mRemoteDataSource;
     }
 
     public void checkViewAttached() {

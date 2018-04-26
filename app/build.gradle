@@ -54,6 +54,10 @@ dependencies {
     implementation "com.android.support:cardview-v7:$versions.support"
     implementation "com.android.support.constraint:constraint-layout:$versions.constraint_layout"
 
+    // Java Rx
+    implementation "io.reactivex:rxandroid:$versions.rx_android"
+    implementation "io.reactivex:rxjava:$versions.rxjava"
+
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:adapter-rxjava:$versions.retrofit"

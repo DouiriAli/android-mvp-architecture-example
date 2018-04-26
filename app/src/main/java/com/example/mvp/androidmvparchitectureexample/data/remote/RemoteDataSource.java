@@ -2,7 +2,6 @@ package com.example.mvp.androidmvparchitectureexample.data.remote;
 
 import com.example.mvp.androidmvparchitectureexample.data.remote.model.News;
 
-import io.reactivex.Flowable;
 import retrofit2.Response;
 import rx.Observable;
 
@@ -17,8 +16,8 @@ public class RemoteDataSource {
 
     private RemoteService mRemoteService;
 
-    public RemoteDataSource(RemoteService remoteUserService) {
-        this.mRemoteService = remoteUserService;
+    public RemoteDataSource(RemoteService remoteService) {
+        this.mRemoteService = remoteService;
     }
 
     /**
@@ -26,7 +25,7 @@ public class RemoteDataSource {
      *
      * @return
      */
-    public Flowable<Response<News>> getArticlesFromApi(){
+    public Observable<Response<News>> getArticlesFromApi(){
 
         return mRemoteService.getArticleFroimApi();
     }

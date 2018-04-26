@@ -1,11 +1,14 @@
 package com.example.mvp.androidmvparchitectureexample.ui.news;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.mvp.androidmvparchitectureexample.NewsApp;
 import com.example.mvp.androidmvparchitectureexample.R;
 import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
 import com.example.mvp.androidmvparchitectureexample.ui.base.BaseActivity;
@@ -23,7 +26,7 @@ import butterknife.ButterKnife;
  * my.alidouiri@gmail.com
  */
 
-public class NewsActivity extends BaseActivity implements ContractNews.ContractView {
+public class NewsActivity extends BaseActivity implements ContractNews.ContractView, NewsAdapter.OnItemClickListener {
 
     private static final String TAG = NewsActivity.class.getSimpleName();
 
@@ -42,9 +45,11 @@ public class NewsActivity extends BaseActivity implements ContractNews.ContractV
 
         ButterKnife.bind(this);
 
-        setUp();
+        NewsApp.getAppComponent().inject(this);
 
         mPresenter.attachView(this);
+
+        setUp();
 
         mPresenter.getArticles(this);
 
@@ -53,11 +58,11 @@ public class NewsActivity extends BaseActivity implements ContractNews.ContractV
     @Override
     protected void setUp() {
 
-        mAdapter = new NewsAdapter(this, new ArrayList<>());
+        mAdapter = new NewsAdapter(this, new ArrayList<>(), this);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerview.setLayoutManager(mLayoutManager);
-        mRecyclerview.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerview.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         mRecyclerview.setAdapter(mAdapter);
 
     }
@@ -67,6 +72,13 @@ public class NewsActivity extends BaseActivity implements ContractNews.ContractV
 
         mAdapter.setItems(items);
 
+    }
+
+    @Override
+    public void onItemClick(ArticleEntity item) {
+
+        if(item != null && item.getUrl() != null && !item.getUrl().isEmpty())
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(item.getUrl())));
     }
 
     @Override
