@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,7 +16,7 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.example.mvp.androidmvparchitectureexample.R;
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 
 import java.util.List;
 
@@ -42,6 +43,26 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
         this.mListener = listener;
     }
 
+    public class ArticleHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.container)
+        RelativeLayout mContainer;
+        @BindView(R.id.thumbnail)
+        ImageView mThumbnail;
+        @BindView(R.id.title)
+        TextView mTitle;
+        @BindView(R.id.description)
+        TextView mDescription;
+        @BindView(R.id.progress)
+        ProgressBar mProgress;
+
+        public ArticleHolder(View view) {
+            super(view);
+
+            ButterKnife.bind(this, view);
+        }
+    }
+
     @Override
     public ArticleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -54,7 +75,59 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
     @Override
     public void onBindViewHolder(ArticleHolder holder, int position) {
 
-        holder.bind(mContext, mItems.get(position), mListener);
+        final ArticleEntity mItem = mItems.get(position);
+
+        if (mItem != null)
+        {
+
+            if (mItem.getTitle() != null)
+                holder.mTitle.setText(mItem.getTitle());
+
+            if (mItem.getDescription() != null)
+                holder.mDescription.setText(mItem.getDescription());
+
+            if (mItem.getUrlToImage() != null)
+            {
+
+                Glide
+                        .with(mContext)
+                        .load(mItem.getUrlToImage())
+                        .listener(new RequestListener<String, GlideDrawable>() {
+                            @Override
+                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                if (holder.mProgress != null)
+                                    holder.mProgress.setVisibility(View.GONE);
+
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                if (holder.mProgress != null)
+                                    holder.mProgress.setVisibility(View.GONE);
+
+                                return false;
+                            }
+                        })
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .centerCrop()
+                        .crossFade()
+                        .into(holder.mThumbnail);
+            }else{
+
+                holder.mProgress.setVisibility(View.GONE);
+
+                Glide
+                        .with(mContext)
+                        .load(R.drawable.news_placeholder)
+                        .into(holder.mThumbnail);
+
+
+            }
+
+        }
+
+        holder.mContainer.setOnClickListener(view -> mListener.onItemClick(mItem));
 
     }
 
@@ -71,69 +144,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticleHolder>
             notifyDataSetChanged();
         }
 
-    }
-
-    static class ArticleHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.thumbnail)
-        ImageView mThumbnail;
-        @BindView(R.id.title)
-        TextView mTitle;
-        @BindView(R.id.description)
-        TextView mDescription;
-        @BindView(R.id.progress)
-        ProgressBar mProgress;
-
-        public ArticleHolder(View itemView) {
-
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-
-        }
-
-        public void bind(Context context, final ArticleEntity item, final OnItemClickListener listener) {
-
-            if (item != null)
-            {
-
-                if (item.getTitle() != null)
-                    mTitle.setText(item.getTitle());
-
-                if (item.getDescription() != null)
-                    mDescription.setText(item.getDescription());
-
-                if (item.getUrlToImage() != null)
-                {
-                    Glide
-                            .with(context)
-                            .load(item.getUrlToImage())
-                            .listener(new RequestListener<String, GlideDrawable>() {
-                                @Override
-                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    if (mProgress != null)
-                                        mProgress.setVisibility(View.GONE);
-
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                    if (mProgress != null)
-                                        mProgress.setVisibility(View.GONE);
-
-                                    return false;
-                                }
-                            })
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .centerCrop()
-                            .crossFade()
-                            .into(mThumbnail);
-                }
-
-            }
-
-            itemView.setOnClickListener(view -> listener.onItemClick(item));
-        }
     }
 
     public interface OnItemClickListener {

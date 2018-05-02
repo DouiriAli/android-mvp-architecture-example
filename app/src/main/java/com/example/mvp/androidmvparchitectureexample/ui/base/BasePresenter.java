@@ -1,6 +1,6 @@
 package com.example.mvp.androidmvparchitectureexample.ui.base;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Ali DOUIRI on 13/04/2018.
@@ -10,7 +10,7 @@ import rx.Subscription;
 public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
 
     private V mView;
-    private Subscription mSubscription;
+    protected Disposable mDisposable;
 
     @Override
     public void attachView(V view) {
@@ -20,11 +20,9 @@ public class BasePresenter<V extends IBaseView> implements IBasePresenter<V> {
     @Override
     public void detachView() {
 
-        if(mView != null)
-            mView = null;
+        if(mView != null) mView = null;
 
-        if(mSubscription != null && !mSubscription.isUnsubscribed())
-            mSubscription.unsubscribe();
+        if(mDisposable != null && !mDisposable.isDisposed()) mDisposable.dispose();
     }
 
     public boolean isViewAttached() {

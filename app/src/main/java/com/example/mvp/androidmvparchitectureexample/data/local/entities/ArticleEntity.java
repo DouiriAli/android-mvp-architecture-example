@@ -1,4 +1,4 @@
-package com.example.mvp.androidmvparchitectureexample.data.local;
+package com.example.mvp.androidmvparchitectureexample.data.local.entities;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

@@ -2,7 +2,7 @@ package com.example.mvp.androidmvparchitectureexample.ui.news;
 
 import android.content.Context;
 
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 import com.example.mvp.androidmvparchitectureexample.ui.base.IBaseView;
 
 import java.util.List;

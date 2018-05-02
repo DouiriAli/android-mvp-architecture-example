@@ -1,9 +1,11 @@
-package com.example.mvp.androidmvparchitectureexample.data.local;
+package com.example.mvp.androidmvparchitectureexample.data.local.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 
 import java.util.List;
 

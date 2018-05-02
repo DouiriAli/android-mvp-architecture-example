@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.example.mvp.androidmvparchitectureexample.NewsApp;
 import com.example.mvp.androidmvparchitectureexample.R;
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 import com.example.mvp.androidmvparchitectureexample.ui.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -51,13 +51,13 @@ public class NewsActivity extends BaseActivity implements ContractNews.ContractV
 
         ButterKnife.bind(this);
 
-        NewsApp.getAppComponent().inject(this);
+        NewsApp.getNewsComponent().inject(this);
 
         mPresenter.attachView(this);
 
-        setUp();
-
         mPresenter.getArticles(this);
+
+        setUp();
 
     }
 

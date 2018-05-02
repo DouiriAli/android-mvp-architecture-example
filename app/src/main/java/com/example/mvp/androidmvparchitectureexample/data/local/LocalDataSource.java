@@ -4,6 +4,9 @@ package com.example.mvp.androidmvparchitectureexample.data.local;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
+import com.example.mvp.androidmvparchitectureexample.data.local.dao.ArticleDao;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
+
 import javax.inject.Singleton;
 
 /**

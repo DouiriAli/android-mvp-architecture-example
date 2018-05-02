@@ -17,7 +17,7 @@ import com.example.mvp.androidmvparchitectureexample.di.module.NewsModule;
 
 public class NewsApp extends Application{
 
-    private static NewsComponent mAppComponent;
+    private static NewsComponent mNewsComponent;
 
     @Override
     public void onCreate() {
@@ -33,15 +33,15 @@ public class NewsApp extends Application{
      */
     private void initializeDagger(){
 
-        mAppComponent = DaggerNewsComponent.builder().appComponent(DaggerAppComponent.builder()
+        mNewsComponent = DaggerNewsComponent.builder().appComponent(DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build()).newsModule(new NewsModule()).
                 build();
 
     }
 
-    public static NewsComponent getAppComponent() {
-        return mAppComponent;
+    public static NewsComponent getNewsComponent() {
+        return mNewsComponent;
     }
 
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
 import com.example.mvp.androidmvparchitectureexample.ui.base.BasePresenter;
@@ -47,7 +47,7 @@ public class NewsPresenter extends BasePresenter<ContractNews.ContractView> impl
 
         getView().showLoading();
 
-        mRemoteDataSource.getArticlesFromApi()
+        mDisposable = mRemoteDataSource.getArticlesFromApi()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(response -> {

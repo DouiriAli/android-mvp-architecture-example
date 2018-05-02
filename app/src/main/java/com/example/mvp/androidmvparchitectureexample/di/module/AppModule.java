@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.example.mvp.androidmvparchitectureexample.BuildConfig;
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleDao;
+import com.example.mvp.androidmvparchitectureexample.data.local.dao.ArticleDao;
 import com.example.mvp.androidmvparchitectureexample.data.local.LocalDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteDataSource;
 import com.example.mvp.androidmvparchitectureexample.data.remote.RemoteService;

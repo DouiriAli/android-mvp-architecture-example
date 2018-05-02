@@ -3,7 +3,7 @@ package com.example.mvp.androidmvparchitectureexample.data.remote.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.mvp.androidmvparchitectureexample.data.local.ArticleEntity;
+import com.example.mvp.androidmvparchitectureexample.data.local.entities.ArticleEntity;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
